@@ -1,11 +1,16 @@
-%% Version 1.0
+%% Version 2.0
 %% January 29, 2019
 %% Written By Henry Do
 
-%% This block of code display the image, turn it into a matrix of values, and turns on AlexNet 
-imgshow(filename.png)       % displays filename of format png
-img = imread(filename.png)  % stores pixel values of the image in an array called 'img'
-net = alexnet               % starts the deep learning package AlexNet in the current program
 
-%%  This block of code executes AlexNet on an image array and outputs classifications
-ls = classify(net,img)      % executes AlexNet on array 'img' and stores classifications as array 'ls'
+%% This code displays the images in the current folder and imports AlexNet.ls *.jpg
+net = alexnet
+
+%% Create datastore
+imds = imageDatastore('*.jpg')
+
+%% Create augmentedImageDatastore
+auds = augmentedImageDatastore([227 227],imds)
+
+%% Classify datastore
+preds = classify(net, auds)
